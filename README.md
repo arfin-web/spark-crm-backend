@@ -1,57 +1,461 @@
-# Spark CRM Backend
+# 🚀 Spark CRM Backend
 
-A FastAPI based backend for building a CRM with a PostgreSQl database. Built with FastAPI, SQLAlchemy 2.0, Alembic, Pydantic v2, and PostgreSQL.
+An AI-powered CRM backend built for modern digital agencies to streamline client management, project tracking, relationship intelligence, proposal generation, and communication workflows.
 
-## 🚀 Key Features
-
-* **FastAPI**: Fully asynchronous endpoints, interactive Swagger/OpenAPI docs (`/docs`).
-* **SQLAlchemy 2.0**: Modern async database queries and type-safe model mappings.
-* **Alembic**: Pre-configured database migration environment.
-* **Pydantic v2 Settings**: Secure, validate, and parse configuration automatically from `.env` files.
-* **CORS Middleware**: Pre-configured for seamless integration with frontend frameworks (like Next.js).
-* **Modern Lifespan Management**: Handles clean startup/shutdown hooks for database connection pooling.
+Designed with a production-oriented architecture, Spark CRM combines traditional CRM capabilities with AI-driven automation to help agencies spend less time on administration and more time delivering value.
 
 ---
 
-## 🛠️ Quick Start
+## ✨ Key Highlights
 
-Follow these steps to get the API running locally in less than 2 minutes.
+* 🔐 JWT Authentication & Authorization
+* 👥 Multi-Tenant Agency CRM
+* 📊 AI-Powered Client Health Scoring (Coming Soon)
+* 🧠 AI Client Relationship Insights & Recommendations (Coming Soon)
+* 📄 Automated Proposal Generation (Coming Soon)
+* ✉️ AI Email Draft Generation (Coming Soon)
+* 📈 AI Usage Analytics & Token Tracking (Coming Soon)
+* 🗂️ Client, Project, Activity & Proposal Management
+* 🔍 Advanced Filtering & Search
+* 🛡️ User Data Isolation & Ownership
+* ⚡ RESTful API with OpenAPI Documentation
 
-### 1. Clone the repository & Navigate
-```bash
-git clone <your-repository-url>
-cd fastapi-starter
+---
+
+## 🎯 Problem Statement
+
+Digital agencies often manage client communication, proposals, projects, and follow-ups across multiple disconnected tools.
+
+Spark CRM centralizes these workflows while leveraging AI to:
+
+* Predict client relationship health
+* Generate project proposals
+* Draft professional client emails
+* Produce actionable client recommendations
+* Track AI usage and operational efficiency
+
+---
+
+## 🏗️ System Architecture
+
+```text
+┌──────────────────────┐
+│     Frontend App     │
+└──────────┬───────────┘
+           │ REST API
+           ▼
+┌──────────────────────┐
+│     FastAPI Backend  │
+├──────────────────────┤
+│ Authentication       │
+│ Client Management    │
+│ Project Management   │
+│ Activity Tracking    │
+│ Proposal Engine      │
+│ Email Draft Engine   │
+│ AI Services Layer    │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│      Database        │
+└──────────────────────┘
+
+           │
+           ▼
+
+┌──────────────────────┐
+│      LLM Provider    │
+│ (OpenAI / Gemini)    │
+└──────────────────────┘
 ```
 
-### 2. Setup Virtual Environment
-```bash
-uv venv
-source .venv/bin/activate
+---
+
+# Core Features
+
+## 🔐 Authentication
+
+Secure authentication system supporting:
+
+* User Registration
+* OAuth2 Password Flow
+* JWT Access Tokens
+* User Profile Management
+* Soft Account Deletion
+
+### Endpoints
+
+```http
+POST   /api/v1/auth/register
+POST   /api/v1/auth/login
+GET    /api/v1/auth/me
+DELETE /api/v1/auth/me
 ```
 
-### 3. Install Dependencies
-```bash
-uv pip install -r requirements.txt
+---
+
+## 👥 Client Management
+
+Manage agency clients through their entire lifecycle.
+
+### Features
+
+* Client onboarding
+* Lead management
+* Prospect tracking
+* Client segmentation
+* Contact management
+* Industry classification
+* Tagging system
+* Notes & relationship tracking
+
+### Client Statuses
+
+```text
+prospect
+active
+inactive
 ```
 
-### 4. Configure Environment Variables
-Copy the template `.env` file and replace the `DATABASE_URL` with your database connection string (supporting `postgresql+asyncpg` for async capabilities):
-```bash
-cp .env.example .env
+### Client Sources
+
+```text
+referral
+website
+cold_outreach
+existing
+other
 ```
 
-### 5. Run Database Migrations
-If you've defined your models under `app/models/`, register them in `app/models/__init__.py`, then generate and run migrations:
-```bash
-# Generate the migration script
-alembic revision --autogenerate -m "initial_migration"
+---
 
-# Apply migrations to the database
-alembic upgrade head
+## 📊 AI Client Health Scoring
+
+One of the platform's flagship features.
+
+The system analyzes:
+
+* Communication frequency
+* Recent activities
+* Client engagement history
+* Relationship signals
+
+to generate a health score indicating the strength of the client relationship.
+
+### Example Response
+
+```json
+{
+  "health_score": 86,
+  "explanation": "Regular communication and consistent engagement indicate a healthy client relationship."
+}
 ```
 
-### 6. Start the Development Server
-Run the FastAPI development server:
-```bash
-uvicorn app.main:app --reload
+### Endpoint
+
+```http
+POST /api/v1/clients/{client_id}/score-health
 ```
+
+---
+
+## 🧠 AI Client Intelligence
+
+Generate AI-powered relationship summaries and recommendations.
+
+### Capabilities
+
+* Relationship analysis
+* Account health reviews
+* Client risk detection
+* Growth opportunities
+* Recommended next actions
+
+### Endpoint
+
+```http
+GET /api/v1/clients/{client_id}/ai-summary
+```
+
+---
+
+## 📁 Project Management
+
+Track client projects from lead to delivery.
+
+### Supported States
+
+```text
+prospect
+proposal_sent
+in_progress
+completed
+paused
+```
+
+### Features
+
+* Budget tracking
+* Estimated hours
+* Timeline management
+* Project lifecycle monitoring
+* Client-project relationships
+
+---
+
+## 📝 Activity Tracking
+
+Maintain a complete audit trail of client interactions.
+
+### Activity Types
+
+```text
+email
+call
+meeting
+proposal
+note
+```
+
+### Automated Intelligence
+
+When activities are created:
+
+* Client last-contact date updates
+* Relationship metrics refresh
+* Health score recalculations trigger automatically
+
+---
+
+## 🤖 AI Proposal Generator
+
+Generate professional client proposals using AI.
+
+The proposal engine automatically creates:
+
+* Project scope
+* Deliverables
+* Timeline
+* Budget estimation
+
+### Endpoint
+
+```http
+POST /api/v1/proposals/generate
+```
+
+### Generated Output
+
+```text
+Project Scope
+Deliverables
+Timeline
+Estimated Cost
+```
+
+---
+
+## ✉️ AI Email Draft Generator
+
+Generate context-aware client communications.
+
+### Supported Use Cases
+
+```text
+follow_up
+proposal
+check_in
+custom
+```
+
+### Examples
+
+* Client follow-ups
+* Project updates
+* Proposal submissions
+* Relationship nurturing emails
+
+### Endpoint
+
+```http
+POST /api/v1/email-drafts/generate
+```
+
+---
+
+## 📈 AI Usage Analytics
+
+Monitor AI consumption and platform usage.
+
+Tracked Metrics:
+
+* Total AI interactions
+* Input tokens
+* Output tokens
+* Usage by feature
+* Token consumption by feature
+
+### Endpoint
+
+```http
+GET /api/v1/ai/stats
+```
+
+---
+
+# REST API Resources
+
+| Resource     | Operations                |
+| ------------ | ------------------------- |
+| Auth         | Register, Login, Profile  |
+| Clients      | Full CRUD                 |
+| Projects     | Full CRUD                 |
+| Activities   | Full CRUD                 |
+| Proposals    | Full CRUD + AI Generation |
+| Email Drafts | Full CRUD + AI Generation |
+| AI Analytics | Reporting                 |
+
+---
+
+# Security
+
+### Authentication
+
+* OAuth2 Password Flow
+* JWT Access Tokens
+* Protected Routes
+
+### Data Ownership
+
+All resources are scoped to authenticated users:
+
+* Clients
+* Projects
+* Activities
+* Proposals
+* Email Drafts
+
+This ensures complete tenant isolation between agencies.
+
+---
+
+# API Documentation
+
+OpenAPI Specification Included
+
+Interactive documentation available through:
+
+```text
+/docs
+```
+
+and
+
+```text
+/redoc
+```
+
+when running the application.
+
+---
+
+# Example Workflow
+
+```text
+Register Agency
+      │
+      ▼
+Create Client
+      │
+      ▼
+Create Project
+      │
+      ▼
+Log Activities
+      │
+      ▼
+Generate Health Score
+      │
+      ▼
+Generate AI Summary
+      │
+      ▼
+Generate Proposal
+      │
+      ▼
+Generate Follow-up Email
+```
+
+---
+
+# Why This Project Stands Out
+
+This project demonstrates real-world backend engineering skills including:
+
+### Backend Development
+
+* REST API Design
+* Authentication & Authorization
+* Multi-Tenant Architecture
+* Business Logic Modeling
+* Data Validation
+
+### AI Engineering
+
+* LLM Integration
+* Prompt-Oriented Workflows
+* AI Feature Orchestration
+* Usage Tracking & Analytics
+
+### Software Architecture
+
+* Separation of Concerns
+* Service Layer Design
+* Scalable Resource Modeling
+* Domain-Driven API Structure
+
+### Production Readiness
+
+* OpenAPI Documentation
+* Secure Authentication
+* Resource Ownership Enforcement
+* Consistent API Contracts
+
+---
+
+## Tech Stack
+
+```text
+FastAPI
+Python
+Pydantic
+JWT Authentication
+OpenAPI / Swagger
+AI Provider APIs (OpenAI / Gemini)
+PostgreSQL / SQL Database
+```
+
+---
+
+## Future Improvements
+
+* Team Collaboration
+* CRM Pipelines
+* AI Meeting Summaries
+* AI Lead Scoring
+* Webhook Integrations
+* CRM Integrations (HubSpot, Salesforce)
+* Email Sending Infrastructure
+* Subscription Billing
+* Real-Time Notifications
+
+---
+
+## License
+
+MIT License
+
+---
+
+Built to demonstrate how modern AI capabilities can be embedded directly into business workflows, transforming a traditional CRM into an intelligent agency operating system.
